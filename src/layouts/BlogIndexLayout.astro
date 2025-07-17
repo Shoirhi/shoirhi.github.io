@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogList from "@/components/BlogList.astro";
+import type { Page } from "astro";
+
+interface Props {
+    page: Page;
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title="全ての記事" description="全てのブログ記事一覧">
+    <div class="py-10 container">
+        <h1 class="text-2xl font-bold">全ての記事</h1>
+        <BlogList posts={page.data} class="mt-6" />
+    </div>
+</BaseLayout>

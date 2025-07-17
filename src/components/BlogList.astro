@@ -1,0 +1,33 @@
+---
+import FormattedDate from "@/components/FormattedDate.astro";
+import type { CollectionEntry } from "astro:content";
+import { cn } from "@/lib/utils";
+
+interface Props {
+    posts: CollectionEntry<"blog">[];
+    class?: string;
+}
+
+const { posts, class: className } = Astro.props;
+---
+
+{
+    posts.length ? (
+        <div class={cn("border-t", className)}>
+            {posts.map((post) => (
+                <article>
+                    <a href={`/blog/${post.id}`} class="block py-4 border-b">
+                        <FormattedDate
+                            date={new Date(post.data.publishedDate)}
+                            class="text-sm text-muted-foreground"
+                        />
+                        <br />
+                        {post.data.title}
+                    </a>
+                </article>
+            ))}
+        </div>
+    ) : (
+        <p class={className}>まだ記事は公開されていません。</p>
+    )
+}

@@ -1,0 +1,22 @@
+---
+import BlogIndexLayout from "@/layouts/BlogIndexLayout.astro";
+import type { GetStaticPathsOptions } from "astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const blogPosts = (
+        await getCollection("blog", ({ data }) => {
+            return data.isDraft !== true;
+        })
+    ).sort(
+        (a, b) =>
+            b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
+    );
+
+    return paginate(blogPosts, { pageSize: 12 });
+}
+
+const { page } = Astro.props;
+---
+
+<BlogIndexLayout page={page} />

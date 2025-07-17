@@ -1,7 +1,27 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogList from "@/components/BlogList.astro";
+import { buttonVariants } from "@/components/ui/button";
+import { getCollection } from "astro:content";
+
+const blogPosts = (
+	await getCollection("blog", ({ data }) => {
+		return data.isDraft !== true;
+	})
+).sort(
+	(a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf(),
+).slice(0, 12);
 ---
 
 <BaseLayout>
-	
+	<div class="py-10 container">
+		<h1 class="sr-only">トップページ</h1>
+		<section>
+			<h2 class="text-2xl font-bold">最近の記事</h2>
+			<BlogList posts={blogPosts} class="mt-6" />
+			<div class="mt-6 max-sm:grid">
+				<a href="/blog" class={buttonVariants({ variant: "outline" })}>すべての記事を見る</a>
+			</div>
+		</section>
+	</div>
 </BaseLayout>
