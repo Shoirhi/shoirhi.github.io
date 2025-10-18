@@ -17,7 +17,7 @@ const { Content } = await render(post);
 
 <BaseLayout title={post.data.title} description={post.data.description}>
     <div class="py-10 container">
-        <article class="prose mx-auto">
+        <article class="prose mx-auto prose-headings:leading-[1.5] prose-p:leading-[1.7] prose-li:leading-[1.7]">
             <FormattedDate
                 date={post.data.publishedDate}
                 class="mt-2 text-sm text-muted-foreground"
